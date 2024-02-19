@@ -83,3 +83,62 @@ Host my_host
 ```console
 ssh my_host
 ```
+
+## Getting started
+
+Ansible uses simple, human-readable scripts called playbooks to automate your
+tasks. You declare the desired state of a local or remote system in your
+playbook. Ansible ensures that the system remains in that state.
+
+Inventories organise managed nodes in centralised files that provide Ansible
+with system information and network locations. Using an inventory file, Ansible
+can manage a large number of hosts with a single command.
+
+Create a file named `inventory.ini` with the IP addresses of the machines to be
+automated.
+
+```
+[myhosts]
+192.168.0.42
+```
+
+Verify your inventory.
+
+```console
+ansible-inventory -i inventory.ini --list
+```
+```
+{
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "myhosts"
+        ]
+    },
+    "myhosts": {
+        "hosts": [
+            "192.168.0.42"
+        ]
+    }
+}
+```
+
+Ping the `myhosts` group in your inventory.
+
+```console
+ansible myhosts --private-key ansible -m ping -i inventory.ini
+```
+```
+192.168.0.42 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+For more hosts, use [YAML](https://docs.ansible.com/ansible/latest/getting_started/get_started_inventory.html#inventories-in-ini-or-yaml-format).
