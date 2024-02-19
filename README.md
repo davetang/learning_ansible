@@ -142,3 +142,27 @@ ansible myhosts --private-key ansible -m ping -i inventory.ini
 ```
 
 For more hosts, use [YAML](https://docs.ansible.com/ansible/latest/getting_started/get_started_inventory.html#inventories-in-ini-or-yaml-format).
+
+Playbooks are automation blueprints, in YAML format, that Ansible uses to
+deploy and configure managed nodes.
+
+```console
+ansible-playbook --private-key ansible -i inventory.ini playbook.yaml
+```
+```
+PLAY [My first play] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.0.42]
+
+TASK [Ping my hosts] ***********************************************************
+ok: [192.168.0.42]
+
+TASK [Print message] ***********************************************************
+ok: [192.168.0.42] => {
+    "msg": "Hello world"
+}
+
+PLAY RECAP *********************************************************************
+192.168.0.42               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
