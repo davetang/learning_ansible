@@ -170,3 +170,17 @@ ok: [192.168.0.42] => {
 PLAY RECAP *********************************************************************
 192.168.0.42               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+
+## Using APT
+
+See [examples](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html) and read [privilege escalation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html)
+
+```console
+ansible-playbook --ask-become-pass -i inventory.ini httpd.yaml
+```
+
+Manually check on the managed host to see if web server was installed and running.
+
+```console
+sudo systemctl status apache2
+```
