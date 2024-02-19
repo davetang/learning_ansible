@@ -45,3 +45,41 @@ and can be shared with other users for a common goal. A typical role could
 configure a host to be a database server. This role would include all the files
 and instructions necessary to install the database application, configure user
 permissions, and apply seed data.
+
+## SSH
+
+1. Generate key using `ssh-keygen` where `-f output_keyfile` and `-b bits`.
+
+```console
+ssh-keygen -t rsa -b 4096 -f ansible
+```
+
+2. Add public key `ansible.pub` to `~/.ssh/authorized_keys` on the host machine.
+3. Change permission.
+
+```console
+cat ansible.pub >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+```
+
+4. Make sure `~/.ssh` is only accessible to you or else ssh will not use your
+   key.
+
+```bash
+chmod 700 ~/.ssh
+```
+
+5. Add entry to `~/.ssh/config` on local machine.
+
+```
+Host my_host
+  HostName 192.168.0.42
+  User dave
+  IdentityFile ~/.ssh/ansible
+```
+
+6. SSH using host name.
+
+```console
+ssh my_host
+```
