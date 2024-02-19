@@ -99,7 +99,7 @@ automated.
 
 ```
 [myhosts]
-192.168.0.42
+192.168.0.42 ansible_ssh_private_key_file=$HOME/.ssh/ansible
 ```
 
 Verify your inventory.
@@ -110,7 +110,11 @@ ansible-inventory -i inventory.ini --list
 ```
 {
     "_meta": {
-        "hostvars": {}
+        "hostvars": {
+            "192.168.0.42": {
+                "ansible_ssh_private_key_file": "$HOME/.ssh/ansible"
+            }
+        }
     },
     "all": {
         "children": [
@@ -129,7 +133,7 @@ ansible-inventory -i inventory.ini --list
 Ping the `myhosts` group in your inventory.
 
 ```console
-ansible myhosts --private-key ansible -m ping -i inventory.ini
+ansible myhosts -m ping -i inventory.ini
 ```
 ```
 192.168.0.42 | SUCCESS => {
@@ -147,7 +151,7 @@ Playbooks are automation blueprints, in YAML format, that Ansible uses to
 deploy and configure managed nodes.
 
 ```console
-ansible-playbook --private-key ansible -i inventory.ini playbook.yaml
+ansible-playbook -i inventory.ini playbook.yaml
 ```
 ```
 PLAY [My first play] ***********************************************************
