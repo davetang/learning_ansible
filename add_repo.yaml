@@ -1,5 +1,5 @@
 ---
-- name: Add key ID used to sign current Debian package repositories on CRAN
+- name: Add and remove APT repositories
   hosts: myhosts
   become: true
   become_method: sudo
