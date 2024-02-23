@@ -1,0 +1,18 @@
+- name: Run commands
+  hosts: myhosts
+  tasks:
+    - name: Return the date
+      ansible.builtin.command: date
+      register: command_result
+
+    - name: Return the date using shell
+      shell: date
+      register: shell_result
+
+    - name: Debugging command
+      debug:
+        var: command_result.stdout_lines
+
+    - name: Debugging shell
+      debug:
+        var: shell_result.stdout_lines
