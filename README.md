@@ -198,3 +198,26 @@ ansible-playbook --ask-become-pass -i inventory.ini add_cran_key.yaml
 ```console
 ansible-playbook --ask-become-pass -i inventory.ini add_repo.yaml
 ```
+
+[Install R](https://cran.r-project.org/bin/linux/debian/).
+
+```console
+ansible-playbook --ask-become-pass -i inventory.ini install_r.yaml
+```
+
+Manually check on the managed host.
+
+```console
+R --version
+```
+```
+R version 4.3.2 (2023-10-31) -- "Eye Holes"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under the terms of the
+GNU General Public License versions 2 or 3.
+For more information about these matters see
+https://www.gnu.org/licenses/.
+```
