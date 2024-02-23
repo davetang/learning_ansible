@@ -184,3 +184,9 @@ Manually check on the managed host to see if web server was installed and runnin
 ```console
 sudo systemctl status apache2
 ```
+
+Add key ID used to sign current Debian package repositories on CRAN.
+
+```console
+ansible-playbook --ask-become-pass -i inventory.ini add_cran_key.yaml
+```

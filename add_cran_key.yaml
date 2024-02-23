@@ -1,0 +1,11 @@
+---
+- name: Add key ID used to sign current Debian package repositories on CRAN
+  hosts: myhosts
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: Add an apt key by id from a keyserver
+    ansible.builtin.apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
