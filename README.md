@@ -221,3 +221,9 @@ GNU General Public License versions 2 or 3.
 For more information about these matters see
 https://www.gnu.org/licenses/.
 ```
+
+Install R and RStudio Server with one playbook.
+
+```console
+ansible-playbook --ask-become-pass -i inventory.ini r_and_rstudio_server.yaml
+```

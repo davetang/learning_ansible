@@ -1,0 +1,51 @@
+---
+- name: Install R and RStudio Server
+  hosts: vms
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: Add an apt key by id from a keyserver
+    ansible.builtin.apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'
+
+  - name: Add source repository into sources list
+    ansible.builtin.apt_repository:
+      repo: deb http://cloud.r-project.org/bin/linux/debian bookworm-cran40/
+      state: present
+
+  - name: update apt list
+    apt:
+      update_cache: yes
+
+  - name: Install base R
+    ansible.builtin.apt:
+      name: r-base
+      state: present
+
+  - name: Install gdebi-core
+    ansible.builtin.apt:
+      name: gdebi-core
+      state: present
+
+  - name: Download DEB package
+    ansible.builtin.get_url:
+      url: https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.12.1-402-amd64.deb
+      dest: /tmp/rstudio-server-2023.12.1-402-amd64.deb
+
+  - name: Install RStudio Server
+    ansible.builtin.command: gdebi --non-interactive /tmp/rstudio-server-2023.12.1-402-amd64.deb
+    register: install
+
+  - debug: msg="{{ install.stdout }}"
+  - debug: msg="{{ install.stderr }}"
+
+  - name: Remove DEB package
+    ansible.builtin.file:
+      path: /tmp/rstudio-server-2023.12.1-402-amd64.deb
+      state: absent
+
+  - name: Run the equivalent of "apt-get clean" as a separate step
+    apt:
+      clean: yes
