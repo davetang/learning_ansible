@@ -1,0 +1,31 @@
+---
+- name: Install Quarto
+  hosts: myhosts
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: Install gdebi-core
+    ansible.builtin.apt:
+      name: gdebi-core
+      state: present
+
+  - name: Download DEB package
+    ansible.builtin.get_url:
+      url: https://quarto.org/download/latest/quarto-linux-amd64.deb
+      dest: /tmp/quarto-linux-amd64.deb
+
+  - name: Install Quarto
+    ansible.builtin.command: gdebi --non-interactive /tmp/quarto-linux-amd64.deb
+    register: install
+
+  - debug: msg="{{ install.stdout }}"
+  - debug: msg="{{ install.stderr }}"
+
+  - name: Remove DEB package
+    ansible.builtin.file:
+      path: /tmp/quarto-linux-amd64.deb
+      state: absent
+
+  - name: Check installation
+    ansible.builtin.command: /usr/local/bin/quarto check
