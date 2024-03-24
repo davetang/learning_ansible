@@ -1,0 +1,19 @@
+---
+- name: Installs GO from APT repo
+  hosts: localhost
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: update apt list
+    apt:
+      update_cache: yes
+
+  - name: Install GO
+    ansible.builtin.apt:
+      name: golang-go
+      state: present
+
+  - name: Run the equivalent of "apt-get clean" as a separate step
+    apt:
+      clean: yes
