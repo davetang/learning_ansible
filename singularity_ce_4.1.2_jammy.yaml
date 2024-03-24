@@ -1,0 +1,27 @@
+---
+- name: Install Singularity CE on Ubuntu 22.04
+  hosts: localhost
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: Download DEB package
+    ansible.builtin.get_url:
+      url: https://github.com/sylabs/singularity/releases/download/v4.1.2/singularity-ce_4.1.2-jammy_amd64.deb
+      dest: /tmp/singularity-ce_4.1.2-jammy_amd64.deb
+
+  - name: Install Singularity CE
+    ansible.builtin.command: apt install -y /tmp/singularity-ce_4.1.2-jammy_amd64.deb
+    register: install
+
+  - debug: msg="{{ install.stdout }}"
+  - debug: msg="{{ install.stderr }}"
+
+  - name: Remove DEB package
+    ansible.builtin.file:
+      path: /tmp/singularity-ce_4.1.2-jammy_amd64.deb
+      state: absent
+
+  - name: Run the equivalent of "apt-get clean" as a separate step
+    apt:
+      clean: yes
