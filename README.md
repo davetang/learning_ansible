@@ -20,6 +20,18 @@ is to gain access to the command line on a remote host, but users can also
 deploy it to forward network traffic and copy files securely. By using SSH,
 Ansible can provision a single host or a group of hosts over the network.
 
+## Installing Ansible
+
+Install
+[Miniforge3](https://github.com/davetang/install_scripts/blob/main/scripts/miniforge.sh)
+first and then use `pip` to install.
+
+```console
+wget https://github.com/davetang/install_scripts/blob/main/scripts/miniforge.sh
+bash miniforge.sh
+pip install ansible-core
+```
+
 ## Ansible concepts
 
 * `Playbook` - a playbook is a collection of ordered tasks or roles that you
